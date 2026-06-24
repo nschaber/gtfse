@@ -1,3 +1,12 @@
 spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/gtfse
+    username: postgres
+    password: postgres
   application:
     name: gtfse-api
+  docker:
+    compose:
+      enabled: true
+      profiles:
+        active: dev
