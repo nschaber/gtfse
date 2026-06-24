@@ -7,8 +7,23 @@ import viteReact from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
 
 const config = defineConfig({
-  resolve: { tsconfigPaths: true },
-  plugins: [devtools(), tailwindcss(), tanstackStart(), viteReact()],
+  resolve: {
+    tsconfigPaths: true,
+  },
+  plugins: [
+    devtools(),
+    tailwindcss(),
+    tanstackStart({
+      spa: {
+        enabled: true,
+      },
+    }),
+    viteReact(),
+  ],
+  server: {
+    open: true,
+    port: 3000,
+  },
 })
 
 export default config
