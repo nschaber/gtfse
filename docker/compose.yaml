@@ -33,6 +33,13 @@ services:
     ports:
       - '8080:8080'
 
+  gtfse-ui:
+    profiles:
+      - prod
+    image: 'ghcr.io/nschaber/gtfse-ui:latest'
+    ports:
+      - '80:80'
+
 volumes:
 
   gtfse-postgis:
