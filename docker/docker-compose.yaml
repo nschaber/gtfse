@@ -4,7 +4,6 @@ services:
     profiles:
       - dev
       - prod
-    container_name: gtfse-postgis
     image: docker.io/postgis/postgis:18-3.6-alpine
     build:
       context: https://github.com/postgis/docker-postgis.git#master:18-3.6
@@ -27,18 +26,37 @@ services:
       - '5432:5432'
 
   gtfse-api:
+    scale: 2
     profiles:
       - prod
     image: 'ghcr.io/nschaber/gtfse-api:latest'
-    ports:
-      - '8080:8080'
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
+      VIRTUAL_PATH: "/api"
+      VIRTUAL_HOST: localhost
+      VIRTUAL_PORT: "8080"
+    expose:
+      - '8080'
 
   gtfse-ui:
     profiles:
       - prod
     image: 'ghcr.io/nschaber/gtfse-ui:latest'
+    environment:
+      VIRTUAL_HOST: localhost
+      VIRTUAL_PORT: "3000"
+    expose:
+      - "3000"
+
+  gtfse-proxy:
+    image: nginxproxy/nginx-proxy
+    profiles:
+      - prod
+    container_name: nginx-proxy
     ports:
       - '80:80'
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
 
 volumes:
 
