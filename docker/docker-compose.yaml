@@ -35,6 +35,11 @@ services:
       VIRTUAL_PATH: "/api"
       VIRTUAL_HOST: localhost
       VIRTUAL_PORT: "8080"
+    healthcheck:
+      test: [ "CMD-SHELL", "wget --no-verbose --tries=1 --spider http://localhost:8080/actuator/health || exit 1" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
     expose:
       - '8080'
 
