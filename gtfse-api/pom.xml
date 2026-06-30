@@ -130,6 +130,9 @@
                 <configuration>
                     <image>
                         <name>ghcr.io/nschaber/gtfse-api</name>
+                        <env>
+                            <BP_JVM_VERSION>25</BP_JVM_VERSION>
+                        </env>
                     </image>
                     <excludes>
                         <exclude>
@@ -138,6 +141,14 @@
                         </exclude>
                     </excludes>
                 </configuration>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>build-image-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
