@@ -1,3 +1,6 @@
 spring:
+  docker:
+    compose:
+      enabled: false
   datasource:
     url: jdbc:postgresql://gtfse-postgis:5432/gtfse
