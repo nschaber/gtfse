@@ -27,7 +27,7 @@ public class SecurityUtils {
                 .requestMatchers(GET, "/swagger-ui.html").permitAll()
                 .requestMatchers(GET, "/swagger-ui/**").permitAll()
                 .requestMatchers(GET, "/v3/api-docs/**").permitAll()
-                .anyRequest().authenticated();
+                .anyRequest().permitAll();
     }
 
     public static Customizer<CorsConfigurer<HttpSecurity>> getCorsCustomizer() {
