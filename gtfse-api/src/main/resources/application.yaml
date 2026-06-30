@@ -11,6 +11,11 @@ spring:
     password: postgres
   application:
     name: gtfse-api
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: http://localhost:8080/realms/gtfs/protocol/openid-connect/certs
   docker:
     compose:
       enabled: true
