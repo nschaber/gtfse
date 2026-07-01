@@ -8,6 +8,7 @@ import de.nsc.gtfseapi.model.StopEntity;
 import de.nsc.gtfseapi.model.StopTimeEntity;
 import de.nsc.gtfseapi.model.TripEntity;
 import org.jspecify.annotations.NonNull;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -44,14 +45,17 @@ public class TripInteractor {
         return this.stopRepository.findByTripId(id);
     }
 
+    @Cacheable(cacheNames = "trip_tiles", value = "trip_tiles", unless = "#result == null")
     public byte[] getTrip(@NonNull final String tripId, @NonNull final Integer z, @NonNull final Integer x, @NonNull final Integer y) {
         return this.tileRepository.getTrip(tripId, z, x, y);
     }
 
+    @Cacheable(cacheNames = "trips_tiles", value = "trips_tiles", unless = "#result == null")
     public byte[] getTrips(@NonNull final Integer z, @NonNull final Integer x, @NonNull final Integer y) {
         return this.tileRepository.getTrips(z, x, y);
     }
 
+    @Cacheable(cacheNames = "trips_stops_tiles", value = "trips_stops_tiles", unless = "#result == null")
     public byte[] getTripAndStops(@NonNull final String tripId, @NonNull final Integer z, @NonNull final Integer x, @NonNull final Integer y) {
         return this.tileRepository.getTripAndStops(tripId, z, x, y);
     }
