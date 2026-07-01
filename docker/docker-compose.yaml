@@ -25,11 +25,23 @@ services:
     ports:
       - '5432:5432'
 
+  gtfse-redis:
+    profiles:
+      - dev
+      - prod
+    image: redis:7.2-alpine
+    healthcheck:
+      test: [ "CMD-SHELL", "redis-cli ping" ]
+      interval: 5s
+      timeout: 5s
+    ports:
+      - '6379:6379'
+
   gtfse-api:
     scale: 2
     profiles:
       - prod
-    image: 'ghcr.io/nschaber/gtfse:api'
+    image: ghcr.io/nschaber/gtfse:api
     environment:
       SPRING_PROFILES_ACTIVE: prod
       VIRTUAL_DEST: "/"
@@ -47,7 +59,7 @@ services:
   gtfse-ui:
     profiles:
       - prod
-    image: 'ghcr.io/nschaber/gtfse:ui'
+    image: ghcr.io/nschaber/gtfse:ui
     environment:
       VIRTUAL_HOST: localhost
       VIRTUAL_PORT: "3000"
